@@ -1,8 +1,11 @@
 import wollok.game.*
+import oso.*
 import hector.*
 import cultivos.*
 
 program farmville {
+	var personaje = hector
+	
 	//  CONFIG	
 	game.title("FarmVille")
 	game.height(10)
@@ -10,9 +13,35 @@ program farmville {
 	game.ground("ground.png")
 
 	//  VISUALES
- 	game.addVisualCharacter(hector)
+ 	game.addVisual(hector)
+ 	game.addVisual(oso)
  	game.addVisualIn(new Maiz(), game.at(1, 1))
- 	
+
+	keyboard.m().onPressDo({hector.plantarMaiz()})
+	keyboard.r().onPressDo({hector.regarPlanta()})
+	keyboard.c().onPressDo({hector.cosecharPlanta()})
+	keyboard.p().onPressDo({game.say(hector, "tengo cosechadas" + hector.cantidadDePlantasCosechadas() + "plantas")})
+	
+	keyboard.t().onPressDo({hector.plantarTrigo()})
+	
+	keyboard.left().onPressDo({personaje.moverseIzquierda()})
+	keyboard.down().onPressDo({personaje.moverseAbajo()})
+	keyboard.up().onPressDo({personaje.moverseArriba()})
+	keyboard.right ().onPressDo({personaje.moverseDerecha()})
+	
+	keyboard.o().onPressDo({personaje = oso})
+	keyboard.h().onPressDo({personaje = hector})
+	
+	//colision
+	game.whenCollideDo(oso,{objeto => objeto.teChocoUnOso()})
  	//  COMIENZA
 	game.start()
+	
+	// CONTROL TECLADO
+	//keyboard.a().onPressDo({game.say(hector,"hola")})
+	//keyboard.o().onPressDo({hector.position(new Position(x = 0 , y = 0))})
+	//teclado
+		//tecla
+			//accion
+
 }
