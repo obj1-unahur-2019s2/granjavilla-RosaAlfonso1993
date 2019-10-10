@@ -2,38 +2,37 @@ import wollok.game.*
 import oso.*
 import hector.*
 import cultivos.*
+import juego.*
 
 program farmville {
-	var personaje = hector
 	
 	//  CONFIG	
 	game.title("FarmVille")
-	game.height(10)
-	game.width(10)
+	game.height(10)//ALTURA
+	game.width(10)//ANCHO
 	game.ground("ground.png")
 
 	//  VISUALES
- 	game.addVisual(hector)
- 	game.addVisual(oso)
- 	game.addVisualIn(new Maiz(), game.at(1, 1))
+ 	juegoGranja.configurarPersonajes()
+ 	
+ 	//game.addVisualIn(new Maiz(), game.at(1, 1))
 
-	keyboard.m().onPressDo({hector.plantarMaiz()})
-	keyboard.r().onPressDo({hector.regarPlanta()})
-	keyboard.c().onPressDo({hector.cosecharPlanta()})
-	keyboard.p().onPressDo({game.say(hector, "tengo cosechadas" + hector.cantidadDePlantasCosechadas() + "plantas")})
+	//configurar teclado
+	juegoGranja.configurarTeclado()
 	
-	keyboard.t().onPressDo({hector.plantarTrigo()})
 	
-	keyboard.left().onPressDo({personaje.moverseIzquierda()})
-	keyboard.down().onPressDo({personaje.moverseAbajo()})
-	keyboard.up().onPressDo({personaje.moverseArriba()})
-	keyboard.right ().onPressDo({personaje.moverseDerecha()})
+	//agregar mercado
+	juegoGranja.configurarMercado()
 	
-	keyboard.o().onPressDo({personaje = oso})
-	keyboard.h().onPressDo({personaje = hector})
+	//configurar movimientos
+	juegoGranja.configurarAcciones()
+	
+	//cambiar personaje
+	juegoGranja.cambiarPersonaje()
 	
 	//colision
-	game.whenCollideDo(oso,{objeto => objeto.teChocoUnOso()})
+	juegoGranja.configurarColision()
+ 	
  	//  COMIENZA
 	game.start()
 	
